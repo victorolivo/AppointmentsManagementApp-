@@ -61,25 +61,31 @@ Login Form
 
 <img width="308" alt="image" src="https://user-images.githubusercontent.com/84644999/160495018-75e6d0f7-84b6-45b7-ae2b-0a0a46e90fd8.png">
 
+
 Main Menu
 
 <img width="401" alt="image" src="https://user-images.githubusercontent.com/84644999/160495073-361349fd-d588-4acc-a8a5-c83730a109f4.png">
+
 
 Active Clients (Customers) Form
 
 <img width="401" alt="image" src="https://user-images.githubusercontent.com/84644999/160495176-860f81cc-939e-4e4f-8b55-9543142ba088.png">
 
+
 Modify Customer (Add Customer Similar)
 
 <img width="589" alt="image" src="https://user-images.githubusercontent.com/84644999/160495425-776a01ed-8142-40ac-9763-bdd8f8ba6e46.png">
+
 
 Active Appointments
 
 <img width="401" alt="image" src="https://user-images.githubusercontent.com/84644999/160495522-beb52280-3b3c-4355-9666-553857eb67a8.png">
 
+
 Modify Appointment (Add Appointment Similar)
 
 <img width="469" alt="image" src="https://user-images.githubusercontent.com/84644999/160496228-fe359d56-42e2-4a71-b582-3bc4ae1f0b07.png">
+
 
 Delete Customer (Delete Appointment Similar)
 
