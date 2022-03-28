@@ -57,7 +57,7 @@
             // idLabel
             // 
             this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(252, 345);
+            this.idLabel.Location = new System.Drawing.Point(252, 290);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(30, 20);
             this.idLabel.TabIndex = 1;
@@ -66,7 +66,7 @@
             // phoneLabel
             // 
             this.phoneLabel.AutoSize = true;
-            this.phoneLabel.Location = new System.Drawing.Point(227, 505);
+            this.phoneLabel.Location = new System.Drawing.Point(227, 450);
             this.phoneLabel.Name = "phoneLabel";
             this.phoneLabel.Size = new System.Drawing.Size(55, 20);
             this.phoneLabel.TabIndex = 2;
@@ -75,7 +75,7 @@
             // emailLabel
             // 
             this.emailLabel.AutoSize = true;
-            this.emailLabel.Location = new System.Drawing.Point(234, 463);
+            this.emailLabel.Location = new System.Drawing.Point(234, 408);
             this.emailLabel.Name = "emailLabel";
             this.emailLabel.Size = new System.Drawing.Size(48, 20);
             this.emailLabel.TabIndex = 3;
@@ -84,7 +84,7 @@
             // lastNameLabel
             // 
             this.lastNameLabel.AutoSize = true;
-            this.lastNameLabel.Location = new System.Drawing.Point(192, 424);
+            this.lastNameLabel.Location = new System.Drawing.Point(192, 369);
             this.lastNameLabel.Name = "lastNameLabel";
             this.lastNameLabel.Size = new System.Drawing.Size(90, 20);
             this.lastNameLabel.TabIndex = 4;
@@ -93,7 +93,7 @@
             // firstNameLabel
             // 
             this.firstNameLabel.AutoSize = true;
-            this.firstNameLabel.Location = new System.Drawing.Point(192, 385);
+            this.firstNameLabel.Location = new System.Drawing.Point(192, 330);
             this.firstNameLabel.Name = "firstNameLabel";
             this.firstNameLabel.Size = new System.Drawing.Size(90, 20);
             this.firstNameLabel.TabIndex = 5;
@@ -102,35 +102,35 @@
             // idTextBox
             // 
             this.idTextBox.Enabled = false;
-            this.idTextBox.Location = new System.Drawing.Point(288, 339);
+            this.idTextBox.Location = new System.Drawing.Point(288, 284);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(83, 26);
             this.idTextBox.TabIndex = 6;
             // 
             // firstNameTextBox
             // 
-            this.firstNameTextBox.Location = new System.Drawing.Point(288, 385);
+            this.firstNameTextBox.Location = new System.Drawing.Point(288, 330);
             this.firstNameTextBox.Name = "firstNameTextBox";
             this.firstNameTextBox.Size = new System.Drawing.Size(184, 26);
             this.firstNameTextBox.TabIndex = 7;
             // 
             // lastNameTextBox
             // 
-            this.lastNameTextBox.Location = new System.Drawing.Point(288, 421);
+            this.lastNameTextBox.Location = new System.Drawing.Point(288, 366);
             this.lastNameTextBox.Name = "lastNameTextBox";
             this.lastNameTextBox.Size = new System.Drawing.Size(184, 26);
             this.lastNameTextBox.TabIndex = 8;
             // 
             // emailTextBox
             // 
-            this.emailTextBox.Location = new System.Drawing.Point(288, 457);
+            this.emailTextBox.Location = new System.Drawing.Point(288, 402);
             this.emailTextBox.Name = "emailTextBox";
             this.emailTextBox.Size = new System.Drawing.Size(253, 26);
             this.emailTextBox.TabIndex = 9;
             // 
             // phoneTextBox
             // 
-            this.phoneTextBox.Location = new System.Drawing.Point(288, 502);
+            this.phoneTextBox.Location = new System.Drawing.Point(288, 447);
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(184, 26);
             this.phoneTextBox.TabIndex = 10;

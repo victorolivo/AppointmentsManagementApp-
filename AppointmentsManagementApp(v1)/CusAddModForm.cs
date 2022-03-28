@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace AppointmentSchedulingApp_v1_
 {
@@ -34,16 +35,56 @@ namespace AppointmentSchedulingApp_v1_
                 //Change Title of Form
                 customerAddModTitleLabel.Text = "Modify Customer";
 
+
+
+
                 //Prefill all text boxes with the existing data for selected customer
-                idTextBox.Text = (Program.customerList[Program.currentRowSelection].Id).ToString();
-                firstNameTextBox.Text = Program.customerList[Program.currentRowSelection].FirstName;
-                lastNameTextBox.Text = Program.customerList[Program.currentRowSelection].LastName;
-                emailTextBox.Text = Program.customerList[Program.currentRowSelection].Email;
-                phoneTextBox.Text = Program.customerList[Program.currentRowSelection].Phone;
+                using (SqlConnection con = new SqlConnection(Program.conS))
+                {
+                    //Get data for selected customer
+                    string sql = "Select * from dbo.Customer Where ID = " + Program.currentIDSelection;
+                    
+                    SqlCommand command = new SqlCommand(sql, con);
+
+                    try
+                    {
+                        //Open Database connection
+                        con.Open();
+                        
+                        //Read data
+                        SqlDataReader cmd = command.ExecuteReader();
+
+                        while (cmd.Read())
+                        {
+                            //Prefill all text boxes with the existing data for selected customer
+                            idTextBox.Text = (cmd.GetInt32(0)).ToString();
+                            firstNameTextBox.Text = (cmd.GetString(1)).ToString();
+                            lastNameTextBox.Text = (cmd.GetString(2)).ToString();
+                            emailTextBox.Text = (cmd.GetString(3)).ToString();
+                            phoneTextBox.Text = (cmd.GetString(4)).ToString();
+                        }
+                        cmd.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        //If an exception occurs, write it to the console
+                        Console.WriteLine(ex.ToString());
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+
+                }
+
+                
             }
             else
             {
-                idTextBox.Text = (Program.customerIDcount + 1).ToString();
+                //New Customer (ID will be auto-generated)
+                idTextBox.Visible = false;
+                idLabel.Visible = false;
+                
             }
         }
 
@@ -52,21 +93,77 @@ namespace AppointmentSchedulingApp_v1_
         //Action: Saves new or modified customer
         private void submitBtn_Click(object sender, EventArgs e)
         {
-            if(formValid()){
+            if(formValid())
+            {
                 if (Program.modifyMode)
                 {
-                    //Validation will be included in a future version
-                    Program.customerList[Program.currentRowSelection].FirstName = firstNameTextBox.Text;
-                    Program.customerList[Program.currentRowSelection].LastName = lastNameTextBox.Text;
-                    Program.customerList[Program.currentRowSelection].Email = emailTextBox.Text;
-                    Program.customerList[Program.currentRowSelection].Phone = phoneTextBox.Text;
+                    //Save changes to DB
+                    using (SqlConnection con = new SqlConnection(Program.conS))
+                    {
+                        //Get data for selected customer
+                        string sql = "UPDATE Customer SET " +
+                                        "FirstName = '" + firstNameTextBox.Text + "', " +
+                                        "LastName = '" + lastNameTextBox.Text + "', " +
+                                        "Email = '" + emailTextBox.Text + "', " +
+                                        "Phone = '" + phoneTextBox.Text + "' " +
+
+                                        "WHERE ID = " + Program.currentIDSelection;
+
+                        
+                        SqlCommand command = new SqlCommand(sql, con);
+
+                        try
+                        {
+                            //Open Database connection
+                            con.Open();
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            //If an exception occurs, write it to the console
+                            Console.WriteLine(ex.ToString());
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+
 
                 }
                 else
                 {
-                    //Create new customer and adds it to the customers List
-                    Customer newCustomer = new Customer(firstNameTextBox.Text, lastNameTextBox.Text, emailTextBox.Text, phoneTextBox.Text);
-                    Program.customerList.Add(newCustomer);
+                    //Create new customer and adds it to the DB
+                    using (SqlConnection con = new SqlConnection(Program.conS))
+                    {
+                        //Get data for selected customer
+                        string sql = "INSERT INTO Customer (FirstName,LastName,Email,Phone) " +
+                                        "VALUES ('" + firstNameTextBox.Text + "'," +
+                                        "'" + lastNameTextBox.Text + "'," +
+                                        "'" + emailTextBox.Text + "'," +
+                                        "'" + phoneTextBox.Text + "')";
+                                        
+
+                        SqlCommand command = new SqlCommand(sql, con);
+
+                        try
+                        {
+                            //Open Database connection
+                            con.Open();
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            //If an exception occurs, write it to the console
+                            Console.WriteLine(ex.ToString());
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
                 }
 
                 this.Hide();

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace AppointmentSchedulingApp_v1_
 {
@@ -24,7 +25,8 @@ namespace AppointmentSchedulingApp_v1_
         //Note: textfile is located (or created if does not exist) at: AppointmentSchedulingApp(v1)\bin\Debug 
         private void loginSubmitBtn_Click(object sender, EventArgs e)
         {
-            if (accessGranted())
+
+            if (accessGranted(userNameTextBox.Text, passwordTextBox.Text))
             {
                 if (!File.Exists("loginRecords.txt"))
                 {
@@ -37,6 +39,8 @@ namespace AppointmentSchedulingApp_v1_
                     WriteLoginRecordFile(sw);
                 }
 
+                Program.currentUser = userNameTextBox.Text;
+                Program.currentUserID = getUserId();
                 this.Hide();
                 MainWindowForm m = new MainWindowForm();
                 m.Show();
@@ -44,36 +48,102 @@ namespace AppointmentSchedulingApp_v1_
             else
             {
                 MessageBox.Show("The username and password combination does not match our records, please try again");
-                userNameTextBox.Clear();
+                
                 passwordTextBox.Clear();
             }
 
         }
 
-        private bool accessGranted()
+        private int getUserId()
         {
-            //Username and password check
-            if(userNameTextBox.Text == Program.tester.Username)
+            int userID = -1;
+            using (SqlConnection con = new SqlConnection(Program.conS))
             {
-                Program.currentUser = Program.tester.Username;
-                if (passwordTextBox.Text == Program.tester.Password)
+                //SQL Command
+                string sql = "Select ID from dbo.[User] Where userName = '" + Program.currentUser + "'";
+
+
+                SqlCommand command = new SqlCommand(sql, con);
+
+                try
                 {
-                    Program.currentUserID = Program.tester.Id;
-                    return true;
-                }
+                    //Open Database connection
+                    con.Open();
+
+                    //Read all valid users and their passwords
+                    SqlDataReader cmd = command.ExecuteReader();
+
+                    while (cmd.Read())
+                    {
+                        userID = cmd.GetInt32(0);
+                    }
+
                     
-            }
-            else if (userNameTextBox.Text == Program.randomUser.Username){
-                Program.currentUser = Program.randomUser.Username;
-                if (passwordTextBox.Text == Program.tester.Password)
+                    
+                    cmd.Close();
+                }
+                catch (Exception ex)
                 {
-                    Program.currentUserID = Program.randomUser.Id;
-                    return true;
+                    //If an exception occurs, write it to the console
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show("XX");
                 }
-                    
+                finally
+                {
+                    con.Close();
+                }
+                return userID;
+
             }
-            
-            //No matches found
+        }
+
+        private bool accessGranted(string userName, string password)
+        { 
+            //List<Dictionary<string,string>> users = new List<Dictionary<string,string>>();
+            Dictionary<string,string> users = new Dictionary<string,string>();
+
+
+            using (SqlConnection con = new SqlConnection(Program.conS))
+            {
+                //Get all valid users sql command
+                string sql = "Select * from dbo.[User]";
+
+
+                SqlCommand command = new SqlCommand(sql, con);
+
+                try
+                {
+                    //Open Database connection
+                    con.Open();
+
+                    //Read all valid users and their passwords
+                    SqlDataReader cmd = command.ExecuteReader();
+                    while (cmd.Read())
+                    {
+                        //Save the into a list for validation
+                        users.Add(cmd.GetString(1),cmd.GetString(2));
+                    }
+                    cmd.Close();
+                }
+                catch (Exception ex)
+                {
+                    //If an exception occurs, write it to the console
+                    Console.WriteLine(ex.ToString());
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+            }
+
+            //Username and password check/validation
+            foreach (KeyValuePair<string, string> user in users) 
+            {
+                if (userName.Equals(user.Key) && password.Equals(user.Value))
+                    return true;
+            }
+
             return false;
             
         }

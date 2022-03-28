@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace AppointmentSchedulingApp_v1_
 {
@@ -29,20 +30,77 @@ namespace AppointmentSchedulingApp_v1_
             {
                 if (Program.modifyMode)
                 {
-                    //Validation will be included in a future version
-                    Program.appointmentList[Program.currentRowSelection].Title = titleTextBox.Text;
-                    Program.appointmentList[Program.currentRowSelection].Description = descTextBox.Text;
-                    Program.appointmentList[Program.currentRowSelection].Date_MMDDYYYY = appDateTimePicker.Value;
-                    Program.appointmentList[Program.currentRowSelection].Time = appTimePicker.Text;
-                    Program.appointmentList[Program.currentRowSelection].CustomerID = Convert.ToInt32(cusIDTextBox.Text);
-                    Program.appointmentList[Program.currentRowSelection].UserID = Program.currentUserID;
+                    //Save changes to DB
+                    using (SqlConnection con = new SqlConnection(Program.conS))
+                    {
+                        //Get data for selected customer
+                        string sql = "UPDATE Appointment SET " +
+                                        "Title = '" + titleTextBox.Text + "', " +
+                                        "Description = '" + descTextBox.Text + "', " +
+                                        "Date = '" + appDateTimePicker.Text + "', " +
+                                        "Time = '" + appTimePicker.Text + "', " +
+                                        "CustomerID = " + Convert.ToInt32(cusIDTextBox.Text) +
+
+                                        " WHERE ID = " + Program.currentIDSelection;
+
+
+                        SqlCommand command = new SqlCommand(sql, con);
+
+                        try
+                        {
+                            //Open Database connection
+                            con.Open();
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            //If an exception occurs, write it to the console
+                            Console.WriteLine(ex.ToString());
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+
 
                 }
                 else
                 {
-                    //Create new appointment and adds it to the appointment List
-                    Appointment newAppointment = new Appointment(titleTextBox.Text,descTextBox.Text,appDateTimePicker.Value,appTimePicker.Text, Convert.ToInt32(cusIDTextBox.Text),Program.currentUserID);
-                    Program.appointmentList.Add(newAppointment);
+                    //Create new customer and adds it to the DB
+                    using (SqlConnection con = new SqlConnection(Program.conS))
+                    {
+                        //Get data for selected customer
+                        string sql = "INSERT INTO Appointment (Title,Description,Date,Time,CustomerID,UserID) " +
+                                        "VALUES ('" + titleTextBox.Text + "'," +
+                                        "'" + descTextBox.Text + "'," +
+                                        "'" + (appDateTimePicker.Value.ToShortDateString()) + "'," +
+                                        "'" + appTimePicker.Text + "'," +
+                                         Convert.ToInt32(cusIDTextBox.Text) + "," +
+                                         Program.currentUserID + ")";
+
+
+
+                        SqlCommand command = new SqlCommand(sql, con);
+
+                        try
+                        {
+                            //Open Database connection
+                            con.Open();
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            //If an exception occurs, write it to the console
+                            Console.WriteLine(ex.ToString());
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
                 }
 
                 this.Hide();
@@ -73,17 +131,57 @@ namespace AppointmentSchedulingApp_v1_
                 //Change Title of Form
                 appointmentAddModTitleLabel.Text = "Modify Appointment";
 
-                //Prefill all text boxes with the existing data for the selected appointment
-                idTextBox.Text = (Program.appointmentList[Program.currentRowSelection].Id).ToString();
-                titleTextBox.Text = Program.appointmentList[Program.currentRowSelection].Title;
-                descTextBox.Text = Program.appointmentList[Program.currentRowSelection].Description;
-                appDateTimePicker.Value = Program.appointmentList[Program.currentRowSelection].Date_MMDDYYYY;
-                appTimePicker.Text = Program.appointmentList[Program.currentRowSelection].Time;
-                cusIDTextBox.Text = (Program.appointmentList[Program.currentRowSelection].CustomerID).ToString();
+
+                //Prefill all text boxes with the existing data for selected appointment
+                using (SqlConnection con = new SqlConnection(Program.conS))
+                {
+                    //Get data for selected customer
+                    string sql = "Select * from dbo.Appointment Where ID = " + Program.currentIDSelection;
+
+                    SqlCommand command = new SqlCommand(sql, con);
+
+                    try
+                    {
+                        //Open Database connection
+                        con.Open();
+
+                        //Read data
+                        SqlDataReader cmd = command.ExecuteReader();
+
+                        while (cmd.Read())
+                        {
+                            //Prefill all text boxes with the existing data for selected customer
+                            idTextBox.Text = (cmd.GetInt32(0)).ToString();
+                            titleTextBox.Text = (cmd.GetString(1)).ToString();
+                            descTextBox.Text = (cmd.GetString(2)).ToString();
+                            appDateTimePicker.Text = (cmd.GetString(3)).ToString();
+                            appTimePicker.Text = (cmd.GetString(4)).ToString();
+                            cusIDTextBox.Text = (cmd.GetInt32(5)).ToString();
+                        }
+                        cmd.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        //If an exception occurs, write it to the console
+                        Console.WriteLine(ex.ToString());
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+
+                }
+
+
             }
             else
             {
-                idTextBox.Text = (Program.appointmentIDcount + 1).ToString();
+                //New Customer (ID will be auto-generated)
+                idTextBox.Visible = false;
+                idLabel.Visible = false;
+                DateTime today = DateTime.Today;
+                appDateTimePicker.Text = today.ToString();
+
             }
         }
 
@@ -91,7 +189,7 @@ namespace AppointmentSchedulingApp_v1_
         {
             CustomersQuickViewForm qv = new CustomersQuickViewForm();
             qv.ShowDialog();
-            cusIDTextBox.Text = (Program.customerList[Program.currentCusSelection].Id).ToString();
+            cusIDTextBox.Text = (Program.currentIDSelection).ToString();
             
             
                 

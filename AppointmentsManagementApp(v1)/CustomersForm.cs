@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace AppointmentSchedulingApp_v1_
 {
@@ -22,7 +23,38 @@ namespace AppointmentSchedulingApp_v1_
         //Fills the data grid view with current data
         private void paintDGV()
         {
-            customersDGV.DataSource = Program.customerList;
+            
+            using (SqlConnection con = new SqlConnection(Program.conS))
+            {
+                //Get all customers sql command
+                string sql = "Select * from dbo.Customer";
+
+                SqlCommand command = new SqlCommand(sql, con);
+
+                try
+                {
+                    //Open Database connection
+                    con.Open();
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    customersDGV.DataSource = dt;
+
+                }
+                catch (Exception ex)
+                {
+                    //If an exception occurs, write it to the console
+                    Console.WriteLine(ex.ToString());
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+            }
+
+            customersDGV.CurrentCell = null;
         }
 
 
@@ -76,41 +108,84 @@ namespace AppointmentSchedulingApp_v1_
             {
                 MessageBox.Show("Please make a selection");
             }
+
             else
             {
                 DialogResult confirm = MessageBox.Show("Are you sure you want to delete this customer?   All appointments related to this customer will also be eliminated",
-                    "", MessageBoxButtons.YesNo);
+                   "", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
                 {
-                    int cusId = Program.customerList[Program.currentRowSelection].Id;
-                    Program.customerList.RemoveAt(Program.currentRowSelection);
-                    customersDGV.CurrentCell = null;
-
-                    //Temporary List to delete appointments realated to a customer (Not efficcient - Will be improved in version 2.0)
-                    BindingList<Appointment> tAppointmentList = new BindingList<Appointment>();
-
-                    //Look for appointments to delete and add them to a temp list
-                    foreach(Appointment a in Program.appointmentList)
+                    //Delete Selected Customer
+                    using (SqlConnection con = new SqlConnection(Program.conS))
                     {
-                        if(a.CustomerID == cusId)
+                        
+                        string sql = "Delete From dbo.Customer Where ID = " + Program.currentIDSelection;
+
+                        SqlCommand command = new SqlCommand(sql, con);
+
+                        try
                         {
-                            tAppointmentList.Add(a);
+                            //Open Database connection
+                            con.Open();
+                            command.ExecuteNonQuery();
                         }
+                        catch (Exception ex)
+                        {
+                            //If an exception occurs, write it to the console
+                            Console.WriteLine(ex.ToString());
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
                     }
 
-                    //Delete those appointments
-                    foreach(Appointment a in tAppointmentList)
+                    //Delete related appointments
+                    using (SqlConnection con = new SqlConnection(Program.conS))
                     {
-                        Program.appointmentList.Remove(a);
+                        //Get data for selected customer
+                        string sql = "Delete From dbo.Appointment Where CustomerID = " + Program.currentIDSelection;
+
+                        SqlCommand command = new SqlCommand(sql, con);
+
+                        try
+                        {
+                            //Open Database connection
+                            con.Open();
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            //If an exception occurs, write it to the console
+                            Console.WriteLine(ex.ToString());
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
                     }
+
+                    paintDGV();
                 }
+                    
             }
         }
 
         //Index Tracker
         private void customersDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Program.currentRowSelection = e.RowIndex;
+
+            try
+            {
+                Program.currentIDSelection = (int)customersDGV.Rows[e.RowIndex].Cells[0].Value;
+            }
+            catch (Exception)
+            {
+
+                customersDGV.CurrentCell = null;
+            }
         }
 
         //Trigger: Method executes when Customer Form opens
@@ -121,6 +196,49 @@ namespace AppointmentSchedulingApp_v1_
             paintDGV();
         }
 
-        
+
+        #region beta feature 
+        //private int getLastID()
+        //{
+        //    int id = -1;
+        //    using (SqlConnection con = new SqlConnection(Program.conS))
+        //    {
+        //        //SQL Command
+        //        string sql = "Select MAX(ID) From dbo.Customer";
+
+        //        SqlCommand command = new SqlCommand(sql, con);
+
+        //        try
+        //        {
+        //            //Open Database connection
+        //            con.Open();
+
+        //            //Read all valid users and their passwords
+        //            SqlDataReader cmd = command.ExecuteReader();
+
+        //            while (cmd.Read())
+        //            {
+        //                id = cmd.GetInt32(0);
+        //            }
+
+
+
+        //            cmd.Close();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            //If an exception occurs, write it to the console
+        //            Console.WriteLine(ex.ToString());
+        //            MessageBox.Show("XX");
+        //        }
+        //        finally
+        //        {
+        //            con.Close();
+        //        }
+
+        //        return id;
+        //    }
+        //} 
+        #endregion
     }
 }

@@ -28,28 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppointmentsForm));
             this.deleteAppointmentBtn = new System.Windows.Forms.Button();
             this.modifyAppointmentBtn = new System.Windows.Forms.Button();
             this.addAppointmentBtn = new System.Windows.Forms.Button();
             this.appointmentDGV = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateMMDDYYYYDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customerIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.appointmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cancelAppointmentOperationBtn = new System.Windows.Forms.Button();
             this.refresh = new System.Windows.Forms.PictureBox();
             this.returnHome = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.appointmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.refresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.returnHome)).BeginInit();
             this.SuspendLayout();
@@ -88,40 +79,30 @@
             // 
             this.appointmentDGV.AllowUserToResizeColumns = false;
             this.appointmentDGV.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.MistyRose;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            this.appointmentDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.appointmentDGV.AutoGenerateColumns = false;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.MistyRose;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            this.appointmentDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
             this.appointmentDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.appointmentDGV.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.appointmentDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.appointmentDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
             this.appointmentDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.appointmentDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDataGridViewTextBoxColumn,
-            this.titleDataGridViewTextBoxColumn,
-            this.descriptionDataGridViewTextBoxColumn,
-            this.dateMMDDYYYYDataGridViewTextBoxColumn,
-            this.timeDataGridViewTextBoxColumn,
-            this.customerIDDataGridViewTextBoxColumn,
-            this.userIDDataGridViewTextBoxColumn});
-            this.appointmentDGV.DataSource = this.appointmentBindingSource;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.MistyRose;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.appointmentDGV.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.MistyRose;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.appointmentDGV.DefaultCellStyle = dataGridViewCellStyle18;
             this.appointmentDGV.EnableHeadersVisualStyles = false;
             this.appointmentDGV.Location = new System.Drawing.Point(12, 66);
             this.appointmentDGV.MultiSelect = false;
@@ -136,67 +117,6 @@
             this.appointmentDGV.Size = new System.Drawing.Size(776, 324);
             this.appointmentDGV.TabIndex = 0;
             this.appointmentDGV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.appointmentDGV_CellClick);
-            this.appointmentDGV.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.appointmentDGV_CellMouseEnter);
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // titleDataGridViewTextBoxColumn
-            // 
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-            this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
-            this.titleDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-            this.titleDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // descriptionDataGridViewTextBoxColumn
-            // 
-            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-            this.descriptionDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-            this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // dateMMDDYYYYDataGridViewTextBoxColumn
-            // 
-            this.dateMMDDYYYYDataGridViewTextBoxColumn.DataPropertyName = "Date_MMDDYYYY";
-            this.dateMMDDYYYYDataGridViewTextBoxColumn.HeaderText = "Date_MMDDYYYY";
-            this.dateMMDDYYYYDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.dateMMDDYYYYDataGridViewTextBoxColumn.Name = "dateMMDDYYYYDataGridViewTextBoxColumn";
-            this.dateMMDDYYYYDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // timeDataGridViewTextBoxColumn
-            // 
-            this.timeDataGridViewTextBoxColumn.DataPropertyName = "Time";
-            this.timeDataGridViewTextBoxColumn.HeaderText = "Time";
-            this.timeDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.timeDataGridViewTextBoxColumn.Name = "timeDataGridViewTextBoxColumn";
-            this.timeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // customerIDDataGridViewTextBoxColumn
-            // 
-            this.customerIDDataGridViewTextBoxColumn.DataPropertyName = "CustomerID";
-            this.customerIDDataGridViewTextBoxColumn.HeaderText = "CustomerID";
-            this.customerIDDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.customerIDDataGridViewTextBoxColumn.Name = "customerIDDataGridViewTextBoxColumn";
-            this.customerIDDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // userIDDataGridViewTextBoxColumn
-            // 
-            this.userIDDataGridViewTextBoxColumn.DataPropertyName = "UserID";
-            this.userIDDataGridViewTextBoxColumn.HeaderText = "UserID";
-            this.userIDDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.userIDDataGridViewTextBoxColumn.Name = "userIDDataGridViewTextBoxColumn";
-            this.userIDDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // appointmentBindingSource
-            // 
-            this.appointmentBindingSource.DataSource = typeof(AppointmentSchedulingApp_v1_.Appointment);
             // 
             // cancelAppointmentOperationBtn
             // 
@@ -230,6 +150,16 @@
             this.returnHome.TabStop = false;
             this.returnHome.Click += new System.EventHandler(this.cancelAppointmentOperationBtn_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label1.Location = new System.Drawing.Point(337, 43);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(123, 20);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "(MM-DD-YYYY)";
+            // 
             // AppointmentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -237,6 +167,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.ClientSize = new System.Drawing.Size(800, 500);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.returnHome);
             this.Controls.Add(this.refresh);
             this.Controls.Add(this.cancelAppointmentOperationBtn);
@@ -251,12 +182,11 @@
             this.Activated += new System.EventHandler(this.AppointmentsForm_Shown);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AppointmentsForm_FormClosed);
             this.Shown += new System.EventHandler(this.AppointmentsForm_Shown);
-            this.Enter += new System.EventHandler(this.AppointmentsForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.appointmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.refresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.returnHome)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -267,15 +197,8 @@
         private System.Windows.Forms.Button addAppointmentBtn;
         private System.Windows.Forms.DataGridView appointmentDGV;
         private System.Windows.Forms.Button cancelAppointmentOperationBtn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateMMDDYYYYDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn customerIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn userIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource appointmentBindingSource;
         private System.Windows.Forms.PictureBox refresh;
         private System.Windows.Forms.PictureBox returnHome;
+        private System.Windows.Forms.Label label1;
     }
 }

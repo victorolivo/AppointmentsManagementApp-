@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace AppointmentSchedulingApp_v1_
 {
@@ -21,7 +22,37 @@ namespace AppointmentSchedulingApp_v1_
 
         private void paintDGV()
         {
-            appointmentDGV.DataSource = Program.appointmentList;
+            using (SqlConnection con = new SqlConnection(Program.conS))
+            {
+                //Get all customers sql command
+                string sql = "Select * from dbo.Appointment";
+
+                SqlCommand command = new SqlCommand(sql, con);
+
+                try
+                {
+                    //Open Database connection
+                    con.Open();
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    appointmentDGV.DataSource = dt;
+
+                }
+                catch (Exception ex)
+                {
+                    //If an exception occurs, write it to the console
+                    Console.WriteLine(ex.ToString());
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+            }
+
+            
         }
 
         //Trigger: Method executes when the user closes the Appointments window form by pressing the top-right 'X' button
@@ -63,28 +94,105 @@ namespace AppointmentSchedulingApp_v1_
             paintDGV();
         }
 
+
+
         private void deleteAppointmentBtn_Click(object sender, EventArgs e)
         {
             if (appointmentDGV.CurrentCell == null)
             {
                 MessageBox.Show("Please make a selection");
             }
+
             else
             {
                 DialogResult confirm = MessageBox.Show("Are you sure you want to delete/cancel this appointment?",
-                    "", MessageBoxButtons.YesNo);
+                   "", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
                 {
-                    Program.appointmentList.RemoveAt(Program.currentRowSelection);
-                    appointmentDGV.CurrentCell = null;
+                    //Delete Selected Appointment
+                    using (SqlConnection con = new SqlConnection(Program.conS))
+                    {
+                        string sql = "Delete From dbo.Appointment Where ID = " + Program.currentIDSelection;
+
+                        SqlCommand command = new SqlCommand(sql, con);
+
+                        try
+                        {
+                            //Open Database connection
+                            con.Open();
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            //If an exception occurs, write it to the console
+                            Console.WriteLine(ex.ToString());
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+
+                    paintDGV();
                 }
+
             }
         }
 
-        //Index Tracker
+        //Selection Tracker
         private void appointmentDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Program.currentRowSelection = e.RowIndex;
+            try
+            {
+                Program.currentIDSelection = (int)appointmentDGV.Rows[e.RowIndex].Cells[0].Value;
+                int cusID = (int)appointmentDGV.Rows[e.RowIndex].Cells[5].Value;
+
+                //User feedback --> Customer related to selected appointment
+
+                using (SqlConnection con = new SqlConnection(Program.conS))
+                {
+                    //Get data for selected customer
+                    string sql = "Select FirstName, LastName From dbo.Customer Where ID = " + cusID;
+                    string userFeedBack = "";
+
+                    SqlCommand command = new SqlCommand(sql, con);
+
+                    try
+                    {
+                        //Open Database connection
+                        con.Open();
+
+                        //Read data
+                        SqlDataReader cmd = command.ExecuteReader();
+
+                        while (cmd.Read())
+                        {
+                            userFeedBack = cmd.GetString(0).ToString() + " " + cmd.GetString(1).ToString();
+                        }
+                        cmd.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        //If an exception occurs, write it to the console
+                        Console.WriteLine(ex.ToString());
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+
+
+                    DataGridViewCell cell = appointmentDGV.Rows[e.RowIndex].Cells[5];
+                    cell.ToolTipText = userFeedBack;
+                }
+
+            }
+            catch (Exception)
+            {
+                appointmentDGV.CurrentCell = null;
+            }
+
             
         }
 
@@ -98,35 +206,5 @@ namespace AppointmentSchedulingApp_v1_
         }
 
 
-        //review (beta feature) --REVIEWED - FUNCTIONAL!
-        private void appointmentDGV_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                int cusId = Program.appointmentList[e.RowIndex].CustomerID;
-                string userFeedBack = "";
-
-                //Look for that CustomerID in the customer list
-                //Write user feedback message
-                foreach (Customer c in Program.customerList)
-                {
-                    if (c.Id == cusId)
-                        userFeedBack = c.FirstName + " " + c.LastName;
-                }
-                
-
-                DataGridViewCell cell = this.appointmentDGV.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.ToolTipText = userFeedBack;
-
-            }
-            catch (IndexOutOfRangeException)
-            {
-
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-
-            }
-        }
     }
 }
