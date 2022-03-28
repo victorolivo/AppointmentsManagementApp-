@@ -58,9 +58,11 @@ versions
 
 # Screenshots (Latest version preview)
 Login Form
+
 <img width="308" alt="image" src="https://user-images.githubusercontent.com/84644999/160495018-75e6d0f7-84b6-45b7-ae2b-0a0a46e90fd8.png">
 
 Main Menu
+
 <img width="401" alt="image" src="https://user-images.githubusercontent.com/84644999/160495073-361349fd-d588-4acc-a8a5-c83730a109f4.png">
 
 Active Clients (Customers) Form
