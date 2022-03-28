@@ -1,4 +1,4 @@
-# AppointmentsManagementApp-v1-
+# AppointmentsManagementApp-v2.0-
 MSSA Project 1: My first project as part of the MSSA program, I created a Windows Forms Application (C#). 
 The application is an 'Appointment Management System', this application tracks a group of clients and its individual appointments. 
 
