@@ -1,8 +1,7 @@
 # AppointmentsManagementApp-
 
 # General
-(MSSA Project 1) For my first project as part of the MSSA program, I created a Windows Application. 
-The application is an 'Appointments Management Application', this application tracks a group of clients and its corresponding appointments. 
+This application tracks a group of clients and its corresponding appointments. 
 
 # Functionality Narrative
 The application starts with a login form, after a successful login, the application takes the user to the Main Menu where the user can select to view the current clients or active appointments. At the current clients' window, the user can 'Add', 'Modify' or 'Delete' clients. Deleting a client also eliminates all its corresponding appointments. At the active appointments window, the user can 'Add', 'Modify' or 'Delete' active appointments. 
